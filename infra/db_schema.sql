@@ -1,0 +1,33 @@
+-- SQL schema for Nivra
+CREATE TABLE IF NOT EXISTS users (
+  id NVARCHAR(100) PRIMARY KEY,
+  name NVARCHAR(200),
+  phone NVARCHAR(50),
+  role NVARCHAR(50),
+  pairedDeviceID NVARCHAR(100)
+);
+
+CREATE TABLE IF NOT EXISTS sensor_logs (
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  device_id NVARCHAR(100),
+  hr FLOAT,
+  spo2 FLOAT,
+  motion FLOAT,
+  timestamp DATETIMEOFFSET DEFAULT SYSUTCDATETIME()
+);
+
+CREATE TABLE IF NOT EXISTS risk_events (
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  device_id NVARCHAR(100),
+  risk_level NVARCHAR(50),
+  confidence FLOAT,
+  timestamp DATETIMEOFFSET DEFAULT SYSUTCDATETIME()
+);
+
+CREATE TABLE IF NOT EXISTS alerts (
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  device_id NVARCHAR(100),
+  message NVARCHAR(1000),
+  timestamp DATETIMEOFFSET DEFAULT SYSUTCDATETIME(),
+  active BIT DEFAULT 1
+);
